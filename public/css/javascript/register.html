@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="form.css">
+    <title>Document</title>
+</head>
+<body>
+    <form id="registerForm">
+    <input type="text" id="name" placeholder="Enter Name" required><br><br>
+    <input type="email" id="email" placeholder="Enter Email" required><br><br>
+    <input type="password" id="password" placeholder="Enter Password" required><br><br>
+    <input type="password" id="check" placeholder="Confirm Password" required><br><br>
+    <button type="submit">Register</button>
+  </form>
+          
+  <script>
+    const form = document.getElementById("registerForm");
+    
+    function compare(){
+      x = document.getElementById("password").value;
+      y = document.getElementById("check").value;
+      if(x!==y){
+        console.log("Passwords are not the same");
+        return true;
+      }
+      return false
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      if(compare()){
+        return
+      }
+
+      const userData = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+      };
+
+
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userData)
+      });
+                     
+                 
+      const result = await response.json();
+      alert(result.message);
+    });
+            
+  </script>
+</body>
+</html>
