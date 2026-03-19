@@ -37,3 +37,20 @@ app.post("/register", async (req, res) => {
         res.status(400).json({ message: "Error registering user", error });
     }
 });
+
+app.post("/login", async (req,res) => {
+    try {
+        const {email,password} = req.body;
+        const user = await User.findOne({email});
+        if (!user){
+            return res.status(401).json({ message: "No Email Found", error });
+        }
+        if (user.password!==password){
+            return res.status(401).json({ message: "The Password is Not Found", error });
+        }
+        res.status(200).json({ message: "Login Successfully"});
+    }
+    catch (error) {
+        res.status(500).json({ message: "Login Is Unsuccessful", error });
+    }
+});
