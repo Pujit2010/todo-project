@@ -43,10 +43,10 @@ app.post("/login", async (req,res) => {
         const {email,password} = req.body;
         const user = await User.findOne({email});
         if (!user){
-            return res.status(401).json({ message: "No Email Found", error });
+            return res.status(401).json({ message: "No Email Found"});
         }
         if (user.password!==password){
-            return res.status(401).json({ message: "The Password is Not Found", error });
+            return res.status(401).json({ message: "The Password is Not Found"});
         }
         res.status(200).json({ message: "Login Successfully"});
     }
