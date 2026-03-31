@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 const User = require("./models/User");
+const Task = require("./models/Task");
 
 mongoose.connect("mongodb://localhost:27017/Todo").then(() => console.log("Mongo is connected")).catch(err => console.log(err));
 app.listen(5000, () => {
@@ -52,5 +53,26 @@ app.post("/login", async (req,res) => {
     }
     catch (error) {
         res.status(500).json({ message: "Login Is Unsuccessful", error });
+    }
+});
+
+app.post("/add", async (req, res) => {
+    try {
+        console.log("req.body")
+        const {text} = req.body;
+
+        const newTask = new Task({
+            text
+        });
+
+
+        await newTask.save();
+
+
+        res.status(201).json({ message: "Task added successfully" });
+
+
+    } catch (error) {
+        res.status(400).json({ message: "Task was not able to be added", error });
     }
 });

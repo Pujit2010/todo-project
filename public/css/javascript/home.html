@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
     <title>Document</title>
 </head>
+
 <body>
     <p>Hi, welcome to the home page</p>
+    <form id="taskForm">
+        <input type="text" placeholder="Write your Task" id="task_input"><br><br>
+        <button id="add" onclick="addTask()">Submit</button>
+    </form>
 </body>
+<script>
+    async function addTask() {
+        const text = document.getElementById("task_input").value;
+
+
+            const response = await fetch("http://localhost:5000/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(text)
+            });
+
+
+            const result = await response.json();
+            alert(result.message);
+        };
+</script>
+
 </html>
